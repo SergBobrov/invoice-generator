@@ -1,9 +1,16 @@
 const {Schema, model, Types} = require('mongoose')
 
-const schema = new Schema({
-    email: {type: String, required: true, unique: true},
-    description: {type: String, required: true},
-    links: [{type: Types.ObjectId, ref: 'Link'}]
-})
+const invoice_data = new Schema(
+    {
+        email: {
+            type: String,
+            required: true
+        },
+        description : [{
+            title : String,
+            price : String
+        }]
+    }
+)
 
-module.exports = model('invoice_data', schema)
+module.exports = model('invoice_data', invoice_data)

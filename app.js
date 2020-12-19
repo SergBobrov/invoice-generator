@@ -1,10 +1,13 @@
 const express = require('express')
 const config = require('config')
 const mongoose = require('mongoose')
+const main = require('./routes/main.routes');
 
 const app = express()
 
-app.use('/api/main', require('./routes/main.routes'))
+app.use(express.json({inflate: true}))
+
+app.use('/api', main)
 
 const PORT = config.get('port') || 5000
 
