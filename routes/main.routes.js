@@ -39,13 +39,17 @@ router.post('/invoice',
 
             try {
                 await initInvoiceData.save()
-                await generatePdf()
             } catch (e) {
-                res.status(502).json({message: 'DataBase of pdf generation error'})
+                res.status(502).json({message: 'DataBase error'})
                 console.log(e);
             }
 
-
+            try {
+                await generatePdf(req.body)
+            } catch (e) {
+                res.status(502).json({message: 'Pdf generation error'})
+                console.log(`'Pdf generation error': ${e}`);
+            }
             // const invoice = new Invoice(email, description)
             //
             // await invoice.save()

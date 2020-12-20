@@ -1,9 +1,8 @@
-const fs = require('fs');
 const htmlPdf = require('html-pdf');
 const ejs = require('ejs');
+const Client = require('../modeles/Client')
 
-const generatePdf = () => {
-
+const generatePdf = (body) => {
 
     let date = new Date();
     let month = date.getMonth() + 1;
@@ -11,35 +10,49 @@ const generatePdf = () => {
     let day = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate());
     date = day + '.' + month + '.' + date.getFullYear();
 
-    const params = {
-        name: "Аида Дроган",
-        email: "aida.drogan.box@gmail.com",
-        id: "127001",
-        company: "#BlondieCode",
-        logo: "/images/logo.png",
-        date: date,
-        quantity: 1,
-        price: 66,
-        currency: "BTC",
-        product: "Вундер-Вафля (меч, серебро)",
-        units: "штука"
-    };
 
-    ejs.renderFile(__dirname + '/template.ejs', params, (err, html) => {
+    const {email, description} = body
 
-        const options = {format: 'A4'};
-        const fileName = __dirname + '/file.pdf';
 
-        const renderHtml = html.replace(/img src=\"\//g, 'img src="file://' + __dirname + "/");
+    new Promise((resolve, reject) => {
+        Client.find({email}, (err, doc) => {
+            resolve({
+                name: `${doc[0].firstName} ${doc[0].lastName}`,
+                company: doc[0].company,
+                id: doc[0].id,
+            })
+        })
+    }).then((data) => {
+        const {name, id, company} = data
+        return {
+            name,
+            email,
+            id,
+            company,
+            logo: "/images/logo.png",
+            date: date,
+            quantity: 1,
+            price: description[0].price,
+            currency: "BTC",
+            product: description[0].title,
+            units: "штука"
+        }
+    }).then((params) => {
+        ejs.renderFile(__dirname + '/template.ejs', params, (err, html) => {
 
-        htmlPdf.create(renderHtml, options).toFile(fileName, (err) => {
+            const options = {format: 'A4'};
+            const fileName = __dirname + '/file.pdf';
 
-            if (err) {
-                console.log('Ошибка конвертации', err)
-            }
-        });
+            htmlPdf.create(html, options).toFile(fileName, (err) => {
+
+                if (err) {
+                    console.log('Ошибка конвертации', err)
+                }
+            });
+        })
     })
-
 };
 
 module.exports = generatePdf;
+
+
