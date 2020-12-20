@@ -1,9 +1,9 @@
 const {Router} = require('express')
 const {check, validationResult} = require('express-validator')
 const Invoice_data = require('../modeles/Invoice_data')
-const Invoice = require('../modeles/invoice')
+const Client = require('../modeles/Client')
 const router = Router()
-
+const generatePdf = require('../pdf_generation/html_to_pdf')
 
 // /api/invoice
 router.post('/invoice',
@@ -22,13 +22,15 @@ router.post('/invoice',
                 })
             }
 
-            // const isEmailExist = await Invoice_data.findOne({email})
-
-            // if (!isEmailExist) {
-            //     return res.status(400).json({message: 'Wrong email'})
-            // }
-
             const {email, description} = req.body
+
+            const isEmailExist = await Client.findOne({email})
+
+
+            if (!isEmailExist) {
+                return res.status(400).json({message: 'Mail not found'})
+            }
+
 
             const initInvoiceData = new Invoice_data({
                 email: email,
@@ -37,8 +39,9 @@ router.post('/invoice',
 
             try {
                 await initInvoiceData.save()
+                await generatePdf()
             } catch (e) {
-                res.status(502).json({message: 'DataBase error'})
+                res.status(502).json({message: 'DataBase of pdf generation error'})
                 console.log(e);
             }
 
@@ -55,5 +58,4 @@ router.post('/invoice',
     })
 
 module.exports = router
-
 

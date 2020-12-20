@@ -13,6 +13,7 @@ const PORT = config.get('port') || 5000
 
 async function start() {
     try {
+
         await mongoose.connect(config.get('mongoURI'), {
             useNewUrlParser: true,
             useUnifiedTopology: true,
@@ -25,5 +26,8 @@ async function start() {
 }
 
 start()
+
+
+
 
 
