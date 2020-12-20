@@ -4,6 +4,8 @@ const Invoice_data = require('../modeles/Invoice_data')
 const Client = require('../modeles/Client')
 const router = Router()
 const generatePdf = require('../pdf_generation/html_to_pdf')
+const sendPdf = require('../mailing/mailing')
+
 
 // /api/invoice
 router.post('/invoice',
@@ -45,11 +47,30 @@ router.post('/invoice',
             }
 
             try {
-                await generatePdf(req.body)
+                new Promise((resolve) => {
+                        generatePdf(req.body)
+                        resolve()
+                    }
+                ).then(() => {
+                    setTimeout(() => {
+                        sendPdf(email)
+                    }, 15000)
+
+                })
             } catch (e) {
-                res.status(502).json({message: 'Pdf generation error'})
+                res.status(503).json({message: 'Pdf generation error'})
                 console.log(`'Pdf generation error': ${e}`);
             }
+
+            // try {
+            //     console.log(email);
+            //     await sendPdf(email)
+            // } catch (e) {
+            //     res.status(504).json({message: 'Sending error'})
+            //     console.log(`'Sending error': ${e}`);
+            // }
+
+
             // const invoice = new Invoice(email, description)
             //
             // await invoice.save()

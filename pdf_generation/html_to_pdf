@@ -16,6 +16,7 @@ const generatePdf = (body) => {
 
     new Promise((resolve, reject) => {
         Client.find({email}, (err, doc) => {
+            console.log(doc);
             resolve({
                 name: `${doc[0].firstName} ${doc[0].lastName}`,
                 company: doc[0].company,
@@ -49,8 +50,8 @@ const generatePdf = (body) => {
                     console.log('Ошибка конвертации', err)
                 }
             });
-        })
-    })
+        })}
+    )
 };
 
 module.exports = generatePdf;
