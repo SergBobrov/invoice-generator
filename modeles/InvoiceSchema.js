@@ -1,6 +1,6 @@
-const {Schema, model, Types} = require('mongoose')
+const {Schema, model} = require('mongoose')
 
-const Invoice_data = new Schema(
+const InvoiceSchema = new Schema(
     {
         email: {
             type: String,
@@ -13,6 +13,6 @@ const Invoice_data = new Schema(
     }
 )
 
-module.exports = model('invoice_data', Invoice_data)
+module.exports = model('invoice_data', InvoiceSchema)
 
 

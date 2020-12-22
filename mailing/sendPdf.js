@@ -1,14 +1,16 @@
 const path = require('path');
 
-const api_key = 'e8b6f87b6798f3dea4dd014f85d04016-e5da0167-ee78be0a';
-const domain = 'sandboxa9e2ad8aabc640e69e032299f8006b06.mailgun.org';
+const api_key = 'cc4b1828f9a725192d6facccaf6b7f09-b6190e87-99402610';
+const domain = 'sandbox1bc455121088456e8016390b49e8af4c.mailgun.org';
 
 const mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
 
-const filepath = path.join(__dirname, '../pdf_generation/file.pdf');
 
-const sendPdf = (email) => {
-    console.log(email);
+
+const sendPdf = (email, fileName) => {
+
+    const filepath = path.join(__dirname, `../pdf_generation/generatedFiles/${fileName}.pdf`);
+
     const data = {
         from: 'Excited User <me@samples.mailgun.org>',
         to: email,

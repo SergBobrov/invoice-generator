@@ -11,21 +11,37 @@ app.use('/api', main)
 
 const PORT = config.get('port') || 5000
 
-async function start() {
-    try {
+// async function start() {
+//     try {
+//
+//         await mongoose.connect(config.get('mongoURI'), {
+//             useNewUrlParser: true,
+//             useUnifiedTopology: true,
+//             useCreateIndex: true
+//         })
+//         app.listen(PORT, () => console.log(`App has been started on port ${PORT}`))
+//     } catch (e) {
+//         console.log('Server Error', e.message)
+//     }
+// }
+//
+// start()
 
-        await mongoose.connect(config.get('mongoURI'), {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            useCreateIndex: true
-        })
-        app.listen(PORT, () => console.log(`App has been started on port ${PORT}`))
-    } catch (e) {
-        console.log('Server Error', e.message)
-    }
-}
+mongoose.connect(config.get('mongoURI'), {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true
+})
+    .then(res => {
+        if (res.connection.readyState !== 0) {
+            app.listen(PORT, () => console.log(`App has been started on port ${PORT}`));
+            return;
+        }
+        console.log('Fail to connect to database');
+    })
+    .catch(err => {
+        console.log('mongoDB was not connect ', err);
+    });
 
-start()
 
-
-console.log('test');
+console.log('test logg');

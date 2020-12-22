@@ -4,9 +4,9 @@
   "description": "mern stack",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "server": "nodemon app.js",
-    "client": "npm run start --prefix clinet",
+    "start": "babel-node app.js",
+    "server": "nodemon --exec babel-node app.js",
+    "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [
@@ -18,16 +18,21 @@
   "author": "Sergei Bobrov <serggbobrov@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "bullmq": "^1.12.1",
     "config": "^3.3.3",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
     "express-validator": "^6.8.0",
     "html-pdf": "^2.2.0",
+    "ioredis": "^4.19.4",
     "mailgun-js": "^0.22.0",
     "mongoose": "^5.11.8",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.12.11",
+    "@babel/node": "^7.12.10",
+    "@babel/core": "^7.12.10",
     "concurrently": "^5.3.0",
     "nodemon": "^2.0.6"
   }
