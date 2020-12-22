@@ -1,7 +1,7 @@
 const path = require('path');
 
-const api_key = 'cc4b1828f9a725192d6facccaf6b7f09-b6190e87-99402610';
-const domain = 'sandbox1bc455121088456e8016390b49e8af4c.mailgun.org';
+const api_key = '';
+const domain = '';
 
 const mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
 
