@@ -20,16 +20,16 @@ module.exports = renderTemplate
 // TODO
 //   fn(a1, a2, cb) ,
 //     cb: (err, result)
-function promisify(fn) {
-    return (...args) => {
-        return new Promise((resolve, reject) => {
-            fn(...args, (err, result) => {
-                if (err) {
-                    reject(err)
-                } else {
-                    resolve(result)
-                }
-            })
-        })
-    }
-}
+// function promisify(fn) {
+//     return (...args) => {
+//         return new Promise((resolve, reject) => {
+//             fn(...args, (err, result) => {
+//                 if (err) {
+//                     reject(err)
+//                 } else {
+//                     resolve(result)
+//                 }
+//             })
+//         })
+//     }
+// }

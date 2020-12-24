@@ -1,4 +1,3 @@
-const ejs = require('ejs');
 const Client = require('../modeles/Client')
 const renderPdf = require('../helpers/renderPdf')
 const currentDate = require('../helpers/currentDate')
@@ -14,26 +13,29 @@ const generatePdf = (email, description, fileName) => {
             }
         })
         .then((data) => {
-            const {name, id, company} = data
+            const {id, name, company} = data
+            const price = description.reduce((accumulator, item) => {
+                return accumulator + Number(item.price)
+            }, 0)
             return {
+                id,
                 name,
                 email,
-                id,
                 company,
-                logo: "/images/logo.png",
+                description,
+                price,
+                logo: "logo.png",
                 date: currentDate(),
-                quantity: 1,
-                price: description[0].price,
-                currency: "BTC",
-                product: description[0].title,
-                units: "штука"
             }
         })
         .then(params => {
             return renderTemplate('template', params)
         })
         .then((html) => {
-            const options = {format: 'A4'};
+            const options = {
+                format: 'A4',
+                base: 'file:///' + __dirname + '/images/'
+            };
             const resultFileName = __dirname + `/generatedFiles/${fileName}.pdf`;
             return renderPdf(html, options, resultFileName);
         });

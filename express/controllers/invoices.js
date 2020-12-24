@@ -1,9 +1,9 @@
-const Client = require('../modeles/Client')
+import {addJobs} from "../../pdf_generation/generatePdfWorker";
+const Client = require('../../modeles/Client')
 const {validationResult} = require('express-validator')
-const Invoice_data = require('../modeles/InvoiceSchema')
-const generatePdf = require('../pdf_generation/generatePdf')
-const sendPdf = require('../mailing/sendPdf')
-const addJobs = require('../queue/queue')
+const Invoice_data = require('../../modeles/InvoiceSchema')
+import { v4 as uuidv4} from 'uuid';
+
 
 export const createInvoice = (req, res) => {
     try {
@@ -36,14 +36,8 @@ export const createInvoice = (req, res) => {
         }
 
         try {
-            addJobs(email, description)
-            // generatePdf(email, description)
-            //     .then(() => {
-            //         setTimeout(() => {
-            //             sendPdf(email)
-            //         }, 15000)
-            //     })
-
+            const id = uuidv4()
+            addJobs(email, description, id)
         } catch (e) {
             res.status(503).json({message: 'Pdf generation error'})
             console.log(`'Pdf generation error': ${e}`);

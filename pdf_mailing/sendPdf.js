@@ -9,6 +9,7 @@ const mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
 
 const sendPdf = (email, fileName) => {
 
+
     const filepath = path.join(__dirname, `../pdf_generation/generatedFiles/${fileName}.pdf`);
 
     const data = {
@@ -23,7 +24,6 @@ const sendPdf = (email, fileName) => {
         console.log(body);
     });
 }
-
 module.exports = sendPdf;
 
 

@@ -7,7 +7,10 @@
     "start": "babel-node app.js",
     "server": "nodemon --exec babel-node app.js",
     "client": "npm run start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "pdfgen": "babel-node pdf_generation/generatePdfWorker.js",
+    "pdfsend": "babel-node pdf_mailing/sendPdfWorker.js",
+    "workers": "concurrently \"npm run pdfgen\" \"npm run pdfsend\" \"npm run server\"",
+    "worker1": "concurrently \"npm run pdfsend\" \"npm run server\""
   },
   "keywords": [
     "node.js",
@@ -19,7 +22,6 @@
   "license": "ISC",
   "dependencies": {
     "bullmq": "^1.12.1",
-    "config": "^3.3.3",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
     "express-validator": "^6.8.0",
