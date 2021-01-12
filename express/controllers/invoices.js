@@ -1,4 +1,4 @@
-import {addJobs} from "../queue/addToQueue";
+import {addJobs} from "../queue/jobs-queue";
 
 const Client = require('../../modeles/Client')
 const {validationResult} = require('express-validator')

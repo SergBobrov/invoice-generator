@@ -7,8 +7,8 @@
     "start": "babel-node express/app.js",
     "server": "nodemon --exec babel-node express/app.js",
     "client": "npm run start --prefix client",
-    "pdfgen": "babel-node pdf_generation/generatePdfWorker.js",
-    "pdfsend": "babel-node pdf_mailing/sendPdfWorker.js",
+    "pdfgen": "babel-node pdf-generation/gen-pdf-worker.js",
+    "pdfsend": "babel-node pdf-mailing/send-pdf-worker.js",
     "workers": "concurrently \"npm run pdfgen\" \"npm run pdfsend\" \"npm run server\"",
     "worker1": "concurrently \"npm run pdfsend\" \"npm run server\""
   },

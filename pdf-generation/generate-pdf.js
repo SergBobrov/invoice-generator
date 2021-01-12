@@ -39,7 +39,7 @@ const generatePdf = (email, description, fileName) => {
                     format: 'A4',
                     base: 'file:///' + __dirname + '/images/'
                 };
-                const resultFileName = __dirname + `/generatedFiles/${fileName}.pdf`;
+                const resultFileName = __dirname + `/generated-files/${fileName}.pdf`;
                 return renderPdf(html, options, resultFileName);
             });
 };

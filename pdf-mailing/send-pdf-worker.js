@@ -1,5 +1,5 @@
 const {Worker} = require('bullmq')
-const sendPdf = require('./sendPdf')
+const sendPdf = require('./send-pdf')
 
 const sendPdfWorker = new Worker('email', async job => {
     console.log('Worker2: sendEmailWorker job', job.name);

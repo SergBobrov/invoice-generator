@@ -1,6 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const main = require('./routes/main.routes');
+const main = require('./routes/main-routes');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
@@ -39,4 +39,4 @@ mongoose.connect('mongodb+srv://Sergg:dev23392@cluster0.aqiff.mongodb.net/invoic
     });
 
 
-console.log('app1 initialisation');
+console.log('app initialisation');

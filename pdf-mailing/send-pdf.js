@@ -10,7 +10,7 @@ const mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
 const sendPdf = (email, fileName) => {
 
 
-    const filepath = path.join(__dirname, `../pdf_generation/generatedFiles/${fileName}.pdf`);
+    const filepath = path.join(__dirname, `../pdf-generation/generated-files/${fileName}.pdf`);
 
     const data = {
         from: 'Excited User <me@samples.mailgun.org>',

@@ -1,7 +1,7 @@
-import generatePdf from './generatePdf'
+import generatePdf from './generate-pdf'
 import {Worker} from "bullmq"
-import {emailQueue} from "../express/queue/addToQueue";
-import {connectDB} from "./DB/connectDB";
+import {emailQueue} from "../express/queue/jobs-queue";
+import {dbConnect} from "./data-base/db-connect";
 const mongoose = require('mongoose')
 
 
@@ -9,7 +9,7 @@ const mongoose = require('mongoose')
 
 
 
-connectDB()
+dbConnect()
     .then(res => {
         if (res.connection.readyState !== 0) {
             const generatePdfWorker = new Worker('pdf', async job => {
