@@ -2,10 +2,10 @@
   "name": "invoice-generator",
   "version": "1.0.0",
   "description": "mern stack",
-  "main": "app.js",
+  "main": "express/app.js",
   "scripts": {
-    "start": "babel-node app.js",
-    "server": "nodemon --exec babel-node app.js",
+    "start": "babel-node express/app.js",
+    "server": "nodemon --exec babel-node express/app.js",
     "client": "npm run start --prefix client",
     "pdfgen": "babel-node pdf_generation/generatePdfWorker.js",
     "pdfsend": "babel-node pdf_mailing/sendPdfWorker.js",
@@ -29,6 +29,7 @@
     "ioredis": "^4.19.4",
     "mailgun-js": "^0.22.0",
     "mongoose": "^5.11.8",
+    "swagger-ui-express": "^4.1.6",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

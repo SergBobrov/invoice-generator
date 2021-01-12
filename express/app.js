@@ -1,6 +1,13 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const main = require('./express/routes/main.routes');
+const main = require('./routes/main.routes');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
+
+const options = {
+    explorer: true
+};
 
 const app = express()
 
@@ -9,6 +16,9 @@ app.use(express.static("public"));
 app.use(express.json({inflate: true}))
 
 app.use('/api', main)
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
+
 
 const PORT = 5000
 
@@ -29,4 +39,4 @@ mongoose.connect('mongodb+srv://Sergg:dev23392@cluster0.aqiff.mongodb.net/invoic
     });
 
 
-console.log('test log1');
+console.log('app1 initialisation');

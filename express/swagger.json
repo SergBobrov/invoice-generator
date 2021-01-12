@@ -1,0 +1,83 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Invoice generator",
+    "description": "Application for generate invoices",
+    "contact": {
+      "name": "SerggBobrov"
+    },
+    "license": {
+      "name": "MIT"
+    }
+  },
+  "host": "localhost:5000",
+  "basePath": "/api",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/invoice": {
+      "post": {
+        "description": "description",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "description",
+            "schema": {
+              "default": "{\n \"email\": \"naik-92@inbox.ru\",\n \"description\": [ { \"title\": \"test\", \"price\": \"2500\" } ]\n}"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Invoice data received",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Wrong email or description",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Mail not found",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "500": {
+            "description": "Something wrong, try one more time",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "502": {
+            "description": "Database error",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "503": {
+            "description": "Pdf generation error",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,4 +1,5 @@
-import {addJobs} from "../../pdf_generation/generatePdfWorker";
+import {addJobs} from "../queue/addToQueue";
+
 const Client = require('../../modeles/Client')
 const {validationResult} = require('express-validator')
 const Invoice_data = require('../../modeles/InvoiceSchema')
@@ -20,7 +21,7 @@ export const createInvoice = (req, res) => {
 
         const isEmailExist = Client.findOne({email})
         if (!isEmailExist) {
-            return res.status(400).json({message: 'Mail not found'})
+            return res.status(40).json({message: 'Mail not found'})
         }
 
         const initInvoiceData = new Invoice_data({
@@ -31,7 +32,7 @@ export const createInvoice = (req, res) => {
         try {
             initInvoiceData.save()
         } catch (e) {
-            res.status(502).json({message: 'DataBase error'})
+            res.status(502).json({message: 'Database error'})
             console.log(e);
         }
 

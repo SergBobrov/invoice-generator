@@ -1,34 +1,31 @@
-import {Queue, Worker} from 'bullmq'
-import IORedis from 'ioredis'
 import generatePdf from './generatePdf'
-// import {sendEmail} from "../pdf_mailing/sendPdfWorker";
+import {Worker} from "bullmq"
+import {emailQueue} from "../express/queue/addToQueue";
+import {connectDB} from "./DB/connectDB";
+const mongoose = require('mongoose')
 
 
 
-const connection = new IORedis();
 
-export const pdfQueue = new Queue('pdf',
-    {connection}
-);
 
-export async function addJobs(email, description, id) {
-    await pdfQueue.add('generatePdf', {email, description, id}); // 5 sec
-}
 
-export const emailQueue = new Queue('email',
-    {connection}
-);
+connectDB()
+    .then(res => {
+        if (res.connection.readyState !== 0) {
+            const generatePdfWorker = new Worker('pdf', async job => {
+                console.log('generatePdfWorker: new job', job.name);
+                const {email, description, id: fileName} = job.data
+                await generatePdf(email, description, fileName);
+                await emailQueue.add('sendPdf', {email, fileName});
 
-const generatePdfWorker = new Worker(pdfQueue.name, async job => {
-    console.log('generatePdfWorker: new job', job.name);
-    const {email, description, id: fileName} = job.data
-    await generatePdf(email, description, fileName);
-    await emailQueue.add('sendPdf', {email, fileName});
-    // sendEmail()
-});
+                generatePdfWorker.on('failed', (job, err) => {
+                    console.log(`${job.id} has failed with ${err.message}`);
+                });
+            });
+            return;
+        }
+        console.log('Fail to connect to database');
+    })
 
-generatePdfWorker.on('failed', (job, err) => {
-    console.log(`${job.id} has failed with ${err.message}`);
-});
 
 console.log('generatePdfWorker initialisation');
