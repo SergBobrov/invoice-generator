@@ -22,7 +22,11 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options))
 
 const PORT = 5000
 
-mongoose.connect('mongodb+srv://Sergg:dev23392@cluster0.aqiff.mongodb.net/invoice_generator', {
+
+export const local_db = 'mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false'
+const atlas = 'mongodb+srv://Sergg:dev23392@cluster0.aqiff.mongodb.net/invoice_generator'
+
+mongoose.connect('mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false/invoice_generator', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true

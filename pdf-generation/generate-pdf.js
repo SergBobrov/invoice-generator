@@ -9,6 +9,7 @@ const generatePdf = (email, description, fileName) => {
     console.log(email);
         return Client.findOne({email})
             .then(clientInfo => {
+                console.log('clientInfo', clientInfo);
                 return {
                     name: `${clientInfo.firstName} ${clientInfo.lastName}`,
                     company: clientInfo.company,
