@@ -14,7 +14,7 @@ const sendPdf = (email, fileName) => {
 
     const data = {
         from: 'Margaret Brick <me@samples.mailgun.org>',
-        to: email,
+           to: email,
         subject: 'Invoice',
         text: 'Invoice generated successful!',
         attachment: filepath

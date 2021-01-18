@@ -1,4 +1,4 @@
-const Client = require("../../modeles/Client")
+const Client = require("../../common/models/Client")
 
 const addClient = new Client({
     email: "test1@test",

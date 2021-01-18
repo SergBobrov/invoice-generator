@@ -1,15 +1,13 @@
-import IORedis from "ioredis";
+import Redis from "ioredis";
+
 import {Queue} from "bullmq";
 
-const connection = new IORedis();
-
-export const emailQueue = new Queue('email',
-    {connection}
-);
+const connection = new Redis(6379, "redis")
 
 export const pdfQueue = new Queue('pdf',
-    {connection}
-);
+    {
+        connection
+    });
 
 export function addJobs(email, description, id) {
     pdfQueue.add('generatePdf', {email, description, id}); // 5 sec

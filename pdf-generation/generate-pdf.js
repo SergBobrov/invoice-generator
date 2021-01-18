@@ -1,7 +1,7 @@
-const Client = require('../modeles/Client')
-const renderPdf = require('../helpers/render-pdf')
-const currentDate = require('../helpers/current-date')
-const renderTemplate = require('../helpers/render-template')
+const Client = require('../common/models/Client')
+const renderPdf = require('../common/helpers/render-pdf')
+const currentDate = require('../common/helpers/current-date')
+const renderTemplate = require('../common/helpers/render-template')
 
 
 const generatePdf = (email, description, fileName) => {

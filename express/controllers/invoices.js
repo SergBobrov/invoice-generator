@@ -1,8 +1,8 @@
 import {addJobs} from "../queue/jobs-queue";
 
-const Client = require('../../modeles/Client')
+const Client = require('../../common/models/Client')
 const {validationResult} = require('express-validator')
-const Invoice_data = require('../../modeles/InvoiceSchema')
+const Invoice_data = require('../../common/models/InvoiceSchema')
 import { v4 as uuidv4} from 'uuid';
 
 

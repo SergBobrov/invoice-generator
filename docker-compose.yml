@@ -1,0 +1,24 @@
+version: "3.9"
+services:
+  web:
+    build:
+      context: .
+      dockerfile: express/Dockerfile
+    ports:
+      - "5000:5000"
+  generator:
+    build:
+      context: .
+      dockerfile: pdf-generation/Dockerfile
+  mailing:
+    build:
+      context: .
+      dockerfile: pdf-mailing/Dockerfile
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"

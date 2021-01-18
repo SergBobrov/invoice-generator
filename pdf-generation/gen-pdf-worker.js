@@ -1,13 +1,18 @@
+import Redis from "ioredis";
+import {Queue} from "bullmq";
 import generatePdf from './generate-pdf'
 import {Worker} from "bullmq"
-import {emailQueue} from "../express/queue/jobs-queue";
 import {dbConnect} from "./data-base/db-connect";
-const mongoose = require('mongoose')
+import * as redis from "redis";
+
+const connection = new Redis(6379, "redis")
 
 
-
-
-
+export const emailQueue = new Queue('email',
+    {
+        connection
+    }
+);
 
 dbConnect()
     .then(res => {
@@ -21,6 +26,8 @@ dbConnect()
                 generatePdfWorker.on('failed', (job, err) => {
                     console.log(`${job.id} has failed with ${err.message}`);
                 });
+            }, {
+                connection
             });
             return;
         }
